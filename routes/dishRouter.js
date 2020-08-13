@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const dishRouter = express.Router();
-dishRouter.use(bodyParser.json())
+dishRouter.use(bodyParser.json());
 
 dishRouter.route('/')
 .all((req, res, next) => {
@@ -23,4 +23,24 @@ dishRouter.route('/')
 .delete((req, res, next) => {
     res.end('Deleting all dishes');
 });
+
+dishRouter.route('/:dishId')
+.get((req, res) => {
+    res.end(`Will send dish detail: ${req.params.dishId} to you`);
+})
+.post((req, res, next) => {
+    res.end(`POST operation not supported on /dishes/${req.params.dishId}`);
+})
+.put((req, res, next) => {
+    res.write(`Updating dish ${req.params.dishId}\n`)
+    res.end(`Will update the dish ${req.body.name} with details: ${req.body.description}`);
+})
+.delete((req, res, next) => {
+    res.end(`Deleting the dish ${req.params.dishId}`);
+});
+
+
+
+
+
 module.exports = dishRouter;
